@@ -75,11 +75,28 @@
         <version>4.7.4</version>
       </dependency>
       <dependency>
+        <groupId>com.github.shyiko.dotenv</groupId>
+        <artifactId>dotenv</artifactId>
+        <version>0.1.1</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/com.electronwill.night-config/core -->
+      <dependency>
+        <groupId>com.electronwill.night-config</groupId>
+        <artifactId>core</artifactId>
+        <version>3.6.6</version>
+     </dependency>
+      <dependency>
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>
         <version>7.7.1</version>
         <scope>test</scope>
-      </dependency>  
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/net.harawata/appdirs -->
+      <dependency>
+        <groupId>net.harawata</groupId>
+        <artifactId>appdirs</artifactId>
+        <version>1.2.1</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
