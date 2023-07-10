@@ -1,4 +1,6 @@
-
+/**
+ * Layered configuration for picocli.
+ */
 package com.github.tom65536.picocli.layered;
 
 /*-
@@ -21,8 +23,3 @@ package com.github.tom65536.picocli.layered;
  * #L%
  */
 
-/**
- * Describes a configuration source of a layered configuration.
- */
-public interface Source {
-}

@@ -1,12 +1,31 @@
 package com.github.tom65536.picocli.layered.impl;
 
+/*-
+ * #%L
+ * layered-picocli
+ * %%
+ * Copyright (C) 2023 Thomas Reiter
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
 import picocli.CommandLine.IDefaultValueProvider;
 
 /**
  * Look up defaults in a chain of default providers.
  */
 public class LayeredDefaultProvider implements IDefaultValueProvider {
-
     /**
      * List of default providers, searched from beginning
      * up to the first entry which does not return a null
@@ -16,14 +35,14 @@ public class LayeredDefaultProvider implements IDefaultValueProvider {
 
     /**
      * Initialize a new instance.
-     * 
-     * @param providers array of default value providers,
-     *     will be searched from the beginning to the first
-     *     provider returning a non-null result.
-     *     The array is copied (shallow).
+     *
+     * @param aProviders array of default value providers,
+     *                  will be searched from the beginning to the first
+     *                  provider returning a non-null result.
+     *                  The array is copied (shallow).
      */
-    public LayeredDefaultProvider(IDefaultValueProvider[] providers) {
-        this.providers = java.util.Arrays.copyOf(providers, providers.length);
+    public LayeredDefaultProvider(final IDefaultValueProvider[] aProviders) {
+        this.providers = java.util.Arrays.copyOf(aProviders, aProviders.length);
     }
 
     /**
@@ -41,8 +60,13 @@ public class LayeredDefaultProvider implements IDefaultValueProvider {
      *         positional parameter
      * @throws Exception when there was a problem obtaining the default value
      */
-    public String defaultValue(ArgSpec argSpec) throws Exception {
-
+    public String defaultValue(final ArgSpec argSpec) throws Exception {
+        for (final IDefaultValueProvider provider : providers) {
+            final String result = provider.defaultValue(argSpec);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
     }
-
 }

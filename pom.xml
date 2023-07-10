@@ -161,19 +161,6 @@
             <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
           </configuration>
         </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>javacc-maven-plugin</artifactId>
-          <version>3.0.1</version>
-          <executions>
-            <execution>
-              <id>jjtree-javacc</id>
-              <goals>
-                <goal>jjtree-javacc</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
         <plugin><!-- a hint for IDE's to add the java sources to the classpath -->
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
@@ -188,8 +175,6 @@
               <configuration>
                 <sources>
                   <source>${project.build.directory}/generated-sources/annotations/</source>
-                  <source>${project.build.directory}/generated-sources/jjtree/</source>
-                  <source>${project.build.directory}/generated-sources/javacc/</source>
                 </sources>
               </configuration>
             </execution>
@@ -278,7 +263,7 @@
           <artifactId>license-maven-plugin</artifactId>
           <version>2.0.1</version>
           <configuration>
-            <licenseName>apache-2</licenseName>a
+            <licenseName>apache_v2</licenseName>
             <roots>
               <root>src</root>
             </roots>
@@ -324,6 +309,8 @@
           <consoleOutput>true</consoleOutput>
           <failsOnError>true</failsOnError>
           <linkXRef>true</linkXRef>
+          <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+          <suppressionsLocation>${project.basedir}/config/checkstyle-suppressions.xml</suppressionsLocation>
         </configuration>
         <executions>
           <execution>
@@ -338,7 +325,53 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
-      </plugin>  
+      </plugin>
+      <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+      </plugin>
+      <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-install-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+      </plugin>
+      <plugin><!-- a hint for IDE's to add the java sources to the classpath -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 

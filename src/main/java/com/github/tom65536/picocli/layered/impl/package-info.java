@@ -1,5 +1,7 @@
-
-package com.github.tom65536.picocli.layered;
+/**
+ * Implementation details.
+ */
+package com.github.tom65536.picocli.layered.impl;
 
 /*-
  * #%L
@@ -20,9 +22,3 @@ package com.github.tom65536.picocli.layered;
  * limitations under the License.
  * #L%
  */
-
-/**
- * Describes a configuration source of a layered configuration.
- */
-public interface Source {
-}
