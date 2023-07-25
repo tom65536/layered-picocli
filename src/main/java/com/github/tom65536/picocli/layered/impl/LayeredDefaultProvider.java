@@ -20,6 +20,7 @@ package com.github.tom65536.picocli.layered.impl;
  * #L%
  */
 
+import picocli.CommandLine.Model.ArgSpec;
 import picocli.CommandLine.IDefaultValueProvider;
 
 /**

@@ -4,8 +4,28 @@
 
  package com.github.tom65536.picocli.layered;
 
+/*-
+ * #%L
+ * layered-picocli
+ * %%
+ * Copyright (C) 2023 Thomas Reiter
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
 import java.util.Stack;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 import picocli.CommandLine.Model.ArgSpec;
 import picocli.CommandLine.Model.CommandSpec;
@@ -26,7 +46,7 @@ import picocli.CommandLine.Model.OptionSpec;
     * The field transformer function used by this
     * instance.
     */
-   private final Function<String, String> keyTransform;
+   private final UnaryOperator<String> keyTransform;
 
    /**
     * Return an instance of the default implementation.
@@ -44,7 +64,7 @@ import picocli.CommandLine.Model.OptionSpec;
     * @param aKeyTransformer gets applied to each key
     */
    public ArgNameDecoder(
-     final Function<String, String> aKeyTransformer
+     final UnaryOperator<String> aKeyTransformer
    ) {
       this.keyTransform = aKeyTransformer;
    }
@@ -69,7 +89,7 @@ import picocli.CommandLine.Model.OptionSpec;
     */
    public static String stripPrefix(final String prefixed) {
       for (int i = 0; i < prefixed.length(); ++i) {
-         if (!Character.isJavaIdentifierPart(prefixed.charAt(i))) {
+         if (Character.isJavaIdentifierPart(prefixed.charAt(i))) {
             return prefixed.substring(i);
          }
       }
@@ -102,14 +122,14 @@ import picocli.CommandLine.Model.OptionSpec;
    private String[] getKeySegments(
       final String key,
       final CommandSpec commandSpec) {
-      final Stack<String> parts = new java.util.ArrayList<String>(5);
-      parts.push((keyTransform == null) ? key : keyTransform(key));
+      final Stack<String> parts = new Stack<String>();
+      parts.push((keyTransform == null) ? key : keyTransform.apply(key));
 
       for (CommandSpec cs = commandSpec; cs != null; cs = cs.parent()) {
          parts.push(
             (keyTransform == null)
             ? cs.name()
-            : keyTransform(cs.name())
+            : keyTransform.apply(cs.name())
          );
       }
 

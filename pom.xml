@@ -5,7 +5,7 @@
   <groupId>com.github.tom65536</groupId>
   <artifactId>layered-picocli</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
 
   <name>layered-picocli</name>
   <description>Layered configuration for default values in picocli</description>
@@ -74,17 +74,17 @@
         <artifactId>picocli</artifactId>
         <version>4.7.4</version>
       </dependency>
-      <dependency>
+      <!--dependency>
         <groupId>com.github.shyiko.dotenv</groupId>
         <artifactId>dotenv</artifactId>
         <version>0.1.1</version>
-      </dependency>
+      </dependency-->
       <!-- https://mvnrepository.com/artifact/com.electronwill.night-config/core -->
-      <dependency>
+      <!--dependency>
         <groupId>com.electronwill.night-config</groupId>
         <artifactId>core</artifactId>
         <version>3.6.6</version>
-     </dependency>
+     </dependency-->
       <dependency>
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>
@@ -99,6 +99,17 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+  <dependencies>
+      <dependency>
+        <groupId>info.picocli</groupId>
+        <artifactId>picocli</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
 
   <build>
     <pluginManagement>      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
